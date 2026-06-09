@@ -5,6 +5,8 @@ import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
 import { errorHandler } from './middlewares/errorHandler';
 
+import projectRoutes from './routes/projectRoutes';
+
 const app: Application = express();
 
 // Segurança e utilitários globais
@@ -22,10 +24,11 @@ const limiter = rateLimit({
 app.use('/api', limiter);
 
 // Rota de Health Check
-app.get('/health', (req, res) => {
+app.get('/health', (_req, res) => {
   res.status(200).json({ status: 'OK', message: 'GameForge AI API is running' });
 });
 
+app.use('/api/projects', projectRoutes);
 
 app.use(errorHandler);
 
